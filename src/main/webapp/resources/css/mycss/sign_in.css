@@ -1,0 +1,18 @@
+.container{
+    text-align:center;
+}
+.row{
+    display:inline-block;
+    text-align:center;
+    width:400px;
+    margin:0 auto;
+}
+input[type=text],input[type=password]{
+    margin-bottom:15px;
+}
+h4{
+    border-left:2px solid #6ba9e4;
+}
+h4>a{
+    padding-left:10px;
+}

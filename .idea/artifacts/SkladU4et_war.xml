@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="SkladU4et:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SkladU4et.war">
+      <element id="artifact" artifact-name="SkladU4et:war exploded" />
+    </root>
+  </artifact>
+</component>
