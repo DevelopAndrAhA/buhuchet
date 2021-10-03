@@ -78,17 +78,20 @@
 
 			<tbody>
 					<%
-						for(int i =0;i<orders.size();i++){
-							Order order = orders.get(i);
-							int k = i+1;
-							out.println("<tr>");
-							out.println("<td>" + k + "</td>");
-							out.println("<td>" + clients.get(i).getFio() + "</td>");
-							out.println("<td>" + order.getInp_date() + "</td>");
-							out.println("<td>" + order.getFull_amount() + "</td>");
-							out.println("<td><a href=#>детально</a></td>");
-							out.println("<tr>");
+						if(orders!=null){
+							for(int i =0;i<orders.size();i++){
+								Order order = orders.get(i);
+								int k = i+1;
+								out.println("<tr>");
+								out.println("<td>" + k + "</td>");
+								out.println("<td>" + clients.get(i).getFio() + "</td>");
+								out.println("<td>" + order.getInp_date() + "</td>");
+								out.println("<td>" + order.getFull_amount() + "</td>");
+								out.println("<td><a href=#>детально</a></td>");
+								out.println("<tr>");
 							}
+						}
+
 					%>
 			</tbody>
 		</table>
