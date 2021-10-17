@@ -15,6 +15,7 @@ public class Client {
     private String fio;
     private String phone;
     private long otdel_id;
+    private float summa_dolga;
 
 
     public long getCl_id() {
@@ -49,7 +50,11 @@ public class Client {
         this.otdel_id = otdel_id;
     }
 
+    public float getSumma_dolga() {
+        return summa_dolga;
+    }
 
-
-
+    public void setSumma_dolga(float summa_dolga) {
+        this.summa_dolga = summa_dolga;
+    }
 }

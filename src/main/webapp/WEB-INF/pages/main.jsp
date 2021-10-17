@@ -58,12 +58,19 @@
 			<thead>
 				<tr>
 					<%
+						List<Order> orders = null;
+						List<Client> clients = null;
+
+						try{
+							orders = (List<Order>) pageContext.getRequest().getAttribute("orders");
+						}catch (Exception e){}
+						try{
+							clients = (List<Client>) pageContext.getRequest().getAttribute("clients");
+						}catch (Exception e){}
 
 
 
 
-						List<Order> orders = (List<Order>) pageContext.getRequest().getAttribute("orders");
-						List<Client> clients = (List<Client>) pageContext.getRequest().getAttribute("clients");
 						out.print("<script type='application/javascript'> var accessToRedirect = false;</script>");
 						if(orders!=null) {
 							out.print("<script type='application/javascript'>  accessToRedirect = true;</script>");

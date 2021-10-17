@@ -57,6 +57,9 @@ public class CrudService {
         public void save(Courier courier){
             session.getCurrentSession().save(courier);
         }
+        public void save(ChildOtdel childOtdel){
+        session.getCurrentSession().save(childOtdel);
+    }
 
         public void save(Dolg dolg){
             session.getCurrentSession().save(dolg);
@@ -78,6 +81,12 @@ public class CrudService {
         public void update(Courier courier){
             session.getCurrentSession().update(courier);
         }
+        public void update(Otdel otdel){
+        session.getCurrentSession().update(otdel);
+    }
+        public void update(ChildOtdel childOtdel){
+        session.getCurrentSession().update(childOtdel);
+    }
 
 
 
@@ -99,8 +108,9 @@ public class CrudService {
     /*=======================================================================================================================================================================================*/
 
 
-    public List getClients(){
+    public List getClients(long [] clients_id){
         Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+        criteria.add(Restrictions.in("cl_id",clients_id));
         List l = criteria.list();
         if(l!=null&&l.size()!=0){
             return l;
@@ -140,8 +150,24 @@ public class CrudService {
         return null;
     }
 
-
-
+    public List getChildOtdels(long otdel_id){
+        Criteria criteria = session.getCurrentSession().createCriteria(ChildOtdel.class);
+        criteria.add(Restrictions.eq("parent_otdel",otdel_id));
+        List l = criteria.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
+    public List getClients(long otdel_id){
+        Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+        criteria.add(Restrictions.eq("otdel_id",otdel_id));
+        List l = criteria.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
 
 
 
@@ -166,5 +192,22 @@ public class CrudService {
         }
         return null;
     }
-
+    public Otdel getOtdel(long otdel_id){
+        Criteria criteria = session.getCurrentSession().createCriteria(Otdel.class);
+        criteria.add(Restrictions.eq("otdel_id",otdel_id));
+        Otdel otdel =(Otdel) criteria.uniqueResult();
+        if(otdel!=null){
+            return otdel;
+        }
+        return null;
+    }
+    public ChildOtdel getChildOtdel(long otdel_id){
+        Criteria criteria = session.getCurrentSession().createCriteria(ChildOtdel.class);
+        criteria.add(Restrictions.eq("child_otdel_id",otdel_id));
+        ChildOtdel childOtdel =(ChildOtdel) criteria.uniqueResult();
+        if(childOtdel!=null){
+            return childOtdel;
+        }
+        return null;
+    }
 }
