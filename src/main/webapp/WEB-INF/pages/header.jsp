@@ -46,12 +46,11 @@
                 "        <ul class=\"nav nav-pills\" role=\"tablist\">\n" +
                 "            <li role=\"presentation\" class=\"active\"><a href=\"orders\">Заказы<span class=\"badge\">"+orderSize+"</span></a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"couriers\">Курьеры</a></li>\n" +
-                "            <li role=\"presentation\"><a href=\"#\">Клиенты </a></li>\n" +
+                "            <li role=\"presentation\"><a href=\"all_clients\">Клиенты </a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"departments\">Отделы </a></li>\n" +
-                "            <li role=\"presentation\"><a href=\"#\">Список должников<span class=\"badge\">3</span></a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"#\">Склад<span class=\"badge\">3</span></a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"#\">Закуп</a></li>\n" +
-                "            <li role=\"presentation\"><a href=\"#\">Продукты</a></li>\n" +
+                "            <li role=\"presentation\"><a href=\"#\">Cчетная палата</a></li>\n" +
                 "        </ul>\n" +
                 "    </div>\n" +
                 "</nav>");
@@ -61,7 +60,6 @@
                 "        <ul class=\"nav nav-pills\" role=\"tablist\">\n" +
                 "            <li role=\"presentation\" class=\"active\"><a href=\"#\">Заказы<span class=\"badge\">"+orderSize+"</span></a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"#\">Отделы </a></li>\n" +
-                "            <li role=\"presentation\"><a href=\"#\">Список должников<span class=\"badge\">3</span></a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"#\">Склад<span class=\"badge\">3</span></a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"#\">Заказы</a></li>\n" +
                 "        </ul>\n" +

@@ -251,15 +251,145 @@ public class RestController {
 
 
 
+	@RequestMapping(value = "new_client",method = RequestMethod.GET)
+	public String new_client(@RequestParam("otdel_id")String otdel_id,@RequestParam("child_department_id")String child_department_id,@RequestParam("client_id")String client_id,ModelMap model) {
+		if(client_id!=null){
+			if(!client_id.equals("0")){
+				Client client = crudService.getClient(Long.parseLong(client_id));
+				model.addAttribute("client",client);
+			}
+		}
+		if(otdel_id!=null){
+			if(!otdel_id.equals("0")){
+				Otdel otdel = crudService.getOtdel(Long.parseLong(otdel_id));
+				if(otdel!=null){
+					model.addAttribute("otdel",otdel);
+				}
+			}
+		}
+		if(child_department_id!=null){
+			if(!child_department_id.equals("0")){
+				ChildOtdel childOtdel = crudService.getChildOtdel(Long.parseLong(child_department_id));
+				if(childOtdel!=null){
+					model.addAttribute("childOtdel",childOtdel);
+				}
+			}
+		}
+		return "new_client";
+	}
+
+
+
+
+	@RequestMapping(value = "save_client",method = RequestMethod.POST)
+	public String save_client(HttpServletRequest httpServletRequest,ModelMap model) {
+		String department_id = httpServletRequest.getParameter("department_id");
+		String childOtdelId = httpServletRequest.getParameter("childOtdelId");
+		String client_id = httpServletRequest.getParameter("client_id");
+		String fio = httpServletRequest.getParameter("fio");
+		String phone = httpServletRequest.getParameter("phone");
+		String balance = httpServletRequest.getParameter("balance");
+
+		Client client = new Client();
+		if(childOtdelId!=null){
+			if(!childOtdelId.isEmpty()){
+				client.setOtdel_id(Long.parseLong(childOtdelId));
+			}else{
+				client.setOtdel_id(Long.parseLong(department_id));
+			}
+		}else{
+			client.setOtdel_id(Long.parseLong(department_id));
+		}
+
+
+		if(client_id!=null){
+			if(!client_id.equals("0")&&!client_id.isEmpty()){
+
+				client.setCl_id(Long.parseLong(client_id));
+				client.setFio(fio);
+				client.setPhone(phone);
+				client.setSumma_dolga(Float.parseFloat(balance));
+				crudService.update(client);
+				Otdel otdel = crudService.getOtdel(Long.parseLong(department_id));
+				if(otdel!=null){
+					model.addAttribute("otdel",otdel);
+				}else{
+					ChildOtdel childOtdel = crudService.getChildOtdel(Long.parseLong(department_id));
+					model.addAttribute("childOtdel",childOtdel);
+				}
+				model.addAttribute("client",client);
+
+			}else{
+				client.setFio(fio);
+				client.setPhone(phone);
+				client.setSumma_dolga(Float.parseFloat(balance));
+				crudService.save(client);
+				Otdel otdel = crudService.getOtdel(Long.parseLong(department_id));
+				if(otdel!=null){
+					model.addAttribute("otdel",otdel);
+				}else{
+					ChildOtdel childOtdel = crudService.getChildOtdel(Long.parseLong(department_id));
+					model.addAttribute("childOtdel",childOtdel);
+				}
+				model.addAttribute("client", client);
+			}
+		}
+		return "new_client";
+	}
+
+
+	@RequestMapping(value = "client_info",method = RequestMethod.GET)
+	public String client_info(@RequestParam("client_id")String client_id,ModelMap model) {
+		if(client_id!=null){
+			if(!client_id.isEmpty()&&!client_id.equals("0")){
+				Client client = crudService.getClient(Long.parseLong(client_id));
+				Otdel otdel = crudService.getOtdel(client.getOtdel_id());
+				if(otdel==null){
+					ChildOtdel childOtdel = crudService.getChildOtdel(client.getOtdel_id());
+					model.addAttribute("childOtdel",childOtdel);
+					model.addAttribute("client",client);
+				}else{
+					model.addAttribute("otdel",otdel);
+					model.addAttribute("client",client);
+				}
+			}
+		}
+
+		return "new_client";
+	}
 
 
 
 
 
+	@RequestMapping(value = "clients",method = RequestMethod.GET)
+	public String childOtdelClients(@RequestParam("child_department_id")String child_department_id,ModelMap model) {
+		if(child_department_id!=null){
+			if(!child_department_id.isEmpty()&&!child_department_id.equals("0")){
+				List<Client> clients = crudService.getClients(Long.parseLong(child_department_id));
+				if(clients!=null){
+					if(clients.size()!=0){
+						model.addAttribute("clients",clients);
+					}
+				}
+			}
+		}
+
+		return "clients_child_department";
+	}
 
 
 
-
+	@RequestMapping(value = "all_clients",method = RequestMethod.GET)
+	public String all_clients(ModelMap model) {
+		List<Client> list = crudService.getClients();
+		if(list!=null){
+			if(list.size()!=0){
+				model.addAttribute("clients",list);
+			}
+		}
+		return "clients_child_department";
+	}
 
 
 }

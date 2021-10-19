@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="kg.dor.models.ChildOtdel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="kg.dor.models.Client" %>
 <html>
@@ -16,45 +15,13 @@
 <div class="container">
 
 	<%
-		List<ChildOtdel> childOtdel = null;
 		List<Client> clients = null;
-		try{
-			childOtdel = (List<ChildOtdel>) pageContext.getRequest().getAttribute("childOtdels");
-		}catch (Exception e){}
 		try{
 			clients = (List<Client>) pageContext.getRequest().getAttribute("clients");
 		}catch (Exception e){}
 
 
 	%>
-
-
-
-	<table class="table">
-		<row>Список подотделов</row>
-		<thead>
-		<tr>
-			<%
-				out.print("<th scope=col>#</th>");
-				out.print("<th scope=col>Название подотдела</th>");
-			%>
-		</tr>
-		</thead>
-
-		<tbody>
-		<%
-			if(childOtdel!=null){
-				for(int i =0;i<childOtdel.size();i++){
-					out.println("<tr>");
-					out.println("<td>"+i+1+"</td>");
-					out.println("<td><a href=\"clients?child_department_id="+childOtdel.get(i).getChild_otdel_id()+"\">"+childOtdel.get(i).getName()+"</a></td>");
-					out.println("<tr>");
-				}
-			}
-		%>
-		</tbody>
-	</table>
-
 
 	<table class="table">
 		<row>Список клиентов</row>

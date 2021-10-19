@@ -30,8 +30,17 @@
 		}catch (Exception e){}
 	%>
 	<row>
-		<a href="new_child_department?otdel_id=<%out.print(otdel_id+"&child_department_id=0");%>">Новый подотдел</a>
-		<a href="new_client?otdel_id=<%out.print(otdel_id);%>">Новый клиент</a>
+		<%
+			if(otdel_id!=0){
+				out.print("<a href=\"new_child_department?otdel_id="+otdel_id+"&child_department_id=0\">Новый подотдел</a>\t");
+				out.print("<a href=\"new_client?client_id=0&child_department_id=0&otdel_id="+otdel_id+"\">Новый клиент</a>");
+			}
+		%>
+
+
+
+
+
 		<form action="savedepartment" method="POST">
 
 			<input type="text" style="display: none" name="otdel_id" value="<%out.print(otdel_id);%>">

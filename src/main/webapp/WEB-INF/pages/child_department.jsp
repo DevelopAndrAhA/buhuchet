@@ -29,10 +29,9 @@
 			Otdel otdel = (Otdel) pageContext.getRequest().getAttribute("otdel");
 			otdel_id = otdel.getOtdel_id();
 		}catch (Exception e){}
-
 	%>
 	<row>
-		<a href="new_client?otdel_id=<%out.print(otdel_id);%>">Новый клиент</a>
+		<a href="new_client?client_id=0&otdel_id=<%out.print(otdel_id);%>&child_department_id=<%out.print(child_otdel_id);%>">Новый клиент</a>
 		<form action="savechildtdel" method="POST">
 			<input type="text" style="display: none" name="otdel_id" value="<%out.print(otdel_id);%>">
 			<input type="text" style="display: none" name="child_otdel_id" value="<%out.print(child_otdel_id);%>">

@@ -81,6 +81,9 @@ public class CrudService {
         public void update(Courier courier){
             session.getCurrentSession().update(courier);
         }
+        public void update(Client client){
+            session.getCurrentSession().update(client);
+        }
         public void update(Otdel otdel){
         session.getCurrentSession().update(otdel);
     }
@@ -107,7 +110,11 @@ public class CrudService {
 
     /*=======================================================================================================================================================================================*/
 
-
+    public List getClients(){
+        Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+        List list  = criteria.list();
+        return list;
+    }
     public List getClients(long [] clients_id){
         Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
         criteria.add(Restrictions.in("cl_id",clients_id));
