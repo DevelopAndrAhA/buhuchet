@@ -391,7 +391,34 @@ public class RestController {
 		return "clients_child_department";
 	}
 
+	@RequestMapping(value = "balance",method = RequestMethod.GET)
+	public String balance(ModelMap model) {
+		Balance balance = crudService.getBalance();
+		if(balance!=null){
+			model.addAttribute("balance",balance.getBalance_sum());
+		}
+		return "balance";
+	}
 
+	@RequestMapping(value = "save_balance",method = RequestMethod.POST)
+	public String save_balance(ModelMap model,HttpServletRequest httpServletRequest) {
+		String balance = httpServletRequest.getParameter("balance");
+		if(balance!=null){
+
+			if(!balance.equals("0")&&!balance.isEmpty()){
+				crudService.updateBalance(Float.parseFloat(balance));
+			}else{
+				Balance balance1 = new Balance();
+				balance1.setBalance_sum(Float.parseFloat(balance));
+				crudService.save(balance1);
+			}
+		}
+		Balance balance1 = crudService.getBalance();
+		if(balance1!=null){
+			model.addAttribute("balance",balance1.getBalance_sum());
+		}
+		return "balance";
+	}
 }
 
 

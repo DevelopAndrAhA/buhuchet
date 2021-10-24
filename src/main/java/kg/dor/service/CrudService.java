@@ -73,6 +73,10 @@ public class CrudService {
             session.getCurrentSession().save(otdel);
         }
 
+        public void save(Balance balance){
+        session.getCurrentSession().save(balance);
+    }
+
         public void save(Product product){
             session.getCurrentSession().save(product);
         }
@@ -90,6 +94,13 @@ public class CrudService {
         public void update(ChildOtdel childOtdel){
         session.getCurrentSession().update(childOtdel);
     }
+        public void updateBalance(float balance){
+            Criteria criteria = session.getCurrentSession().createCriteria(Balance.class);
+            criteria.setMaxResults(1);
+            Balance balance1 = (Balance)criteria.uniqueResult();
+            balance1.setBalance_sum(balance);
+            session.getCurrentSession().update(balance1);
+        }
 
 
 
@@ -114,6 +125,12 @@ public class CrudService {
         Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
         List list  = criteria.list();
         return list;
+    }
+    public Balance getBalance(){
+        Criteria criteria = session.getCurrentSession().createCriteria(Balance.class);
+        criteria.setMaxResults(1);
+        Balance balance = (Balance) criteria.uniqueResult();
+        return balance;
     }
     public List getClients(long [] clients_id){
         Criteria criteria = session.getCurrentSession().createCriteria(Client.class);

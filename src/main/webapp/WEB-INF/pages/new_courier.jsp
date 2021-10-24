@@ -7,7 +7,7 @@
 <%@ page import="kg.dor.models.Courier" %>
 <html>
 <head>
-	<title>Главная</title>
+	<title>Курьер</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script type="text/javascript" src="resources/js/jquery-3.3.1.min.js"></script>
 	<link rel="stylesheet"  href="resources/css/mycss/mycss.css" />
