@@ -443,9 +443,22 @@ public class RestController {
 
 	@RequestMapping(value = "new_order",method = RequestMethod.GET)
 	public String new_order(ModelMap model) {
+
+		List<Client> clients = crudService.getClients();
+		if(clients!=null){
+			model.addAttribute("clients",clients);
+		}
 		return "new_order";
 	}
+	@RequestMapping(value = "search_client",method = RequestMethod.GET)
+	public String search_client(ModelMap model,@RequestParam("fio")String fio) {
 
+		List<Client> clients = crudService.search_client(fio);
+		if(clients!=null){
+			model.addAttribute("clients",clients);
+		}
+		return "new_order";
+	}
 
 
 

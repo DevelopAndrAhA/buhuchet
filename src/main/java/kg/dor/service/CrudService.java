@@ -4,6 +4,7 @@ import kg.dor.models.*;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -144,6 +145,18 @@ public class CrudService {
     public List getCouriers(){
         Criteria criteria = session.getCurrentSession().createCriteria(Courier.class);
         List l = criteria.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
+    public List search_client(String fio){
+        String sql = "select * from DOR_CLIENT t where upper(t.fio) like '%"+fio.toUpperCase()+"%'";
+        //Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+        SQLQuery sqlQuery = session.getCurrentSession().createSQLQuery(sql).addEntity(Client.class);
+        //criteria.add(Restrictions.like("fio", fio, MatchMode.START));
+        //List l = criteria.list();
+        List l = sqlQuery.list();
         if(l!=null&&l.size()!=0){
             return l;
         }

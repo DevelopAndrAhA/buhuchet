@@ -1,3 +1,5 @@
+<%@ page import="kg.dor.models.Client" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +21,11 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="container">
-
+	<%List<Client> clients=null;
+		try{
+			clients = (List<Client>)pageContext.getRequest().getAttribute("clients");
+		}catch (Exception e){}
+	%>
 	<div class="row">
 			<table class="table">
 
@@ -45,13 +51,14 @@
 			<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Выбрать клиента
 				<span class="caret"></span></button>
 			<ul class="dropdown-menu">
-				<li class="dropdown-header">Our Team</li>
-				<li><a href="#">James</a></li>
-				<li><a href="#">Mike</a></li>
+				<li class="dropdown-header">Список клиентов</li>
 				<%
-					for(int i=0;i<100;i++){
-						out.print("<li><a href=\"#\">Mike Mike Mike+"+i+"</a></li>");
+					if(clients!=null){
+						for(int i=0;i<clients.size();i++){
+							out.print("<li><a><p>"+clients.get(i).getFio()+"</p></a></li>");
+						}
 					}
+
 				%>
 			</ul>
 		</div>
@@ -59,15 +66,16 @@
 		<div class="row">
 			<div class="col-xs-4 col-md-4">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search" id="txtSearch"/>
+					<input type="text" class="form-control" placeholder="Поиск клиента" id="txtSearch"/>
 					<div class="input-group-btn">
-						<button class="btn btn-primary" type="submit">
+						<button class="btn btn-primary" id="search" type="submit">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</div>
 				</div>
 			</div>
 		</div>
+		<h1>Клиент :</h1>
 
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit" id="plus">+</button>
@@ -114,8 +122,34 @@
 	});
 </script>
 
-
+<script  type="application/javascript">
+	$("#search").click(function() {
+		window.location.replace("search_client?fio="+document.getElementById("txtSearch").value);
+	});
+</script>
 
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
