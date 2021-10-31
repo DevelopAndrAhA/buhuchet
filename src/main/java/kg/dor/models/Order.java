@@ -14,6 +14,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long order_id;
     private long cl_id;
+    private String cl_fio;
     private String inp_date;
 
 
@@ -63,5 +64,13 @@ public class Order {
 
     public void setCl_id(long cl_id) {
         this.cl_id = cl_id;
+    }
+
+    public String getCl_fio() {
+        return cl_fio;
+    }
+
+    public void setCl_fio(String cl_fio) {
+        this.cl_fio = cl_fio;
     }
 }

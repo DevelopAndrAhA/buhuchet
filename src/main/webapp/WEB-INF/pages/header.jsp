@@ -48,7 +48,7 @@
                 "            <li role=\"presentation\"><a href=\"couriers\">Курьеры</a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"all_clients\">Клиенты </a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"departments\">Отделы </a></li>\n" +
-                "            <li role=\"presentation\"><a href=\"#\">Заказ</a></li>\n" +
+                "            <li role=\"presentation\"><a href=\"all_orders\">Заказ</a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"#\">Закуп</a></li>\n" +
                 "            <li role=\"presentation\"><a href=\"balance\">Баланс</a></li>\n" +
                 "        </ul>\n" +

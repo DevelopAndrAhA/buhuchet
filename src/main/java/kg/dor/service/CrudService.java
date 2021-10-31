@@ -165,6 +165,15 @@ public class CrudService {
         }
         return null;
     }
+    public Order getOrder(long order_id){
+        Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
+        criteria.add(Restrictions.eq("order_id",order_id));
+        Order order = (Order) criteria.uniqueResult();
+        if(order!=null){
+            return order;
+        }
+        return null;
+    }
     public List getOtdels(){
         Criteria criteria = session.getCurrentSession().createCriteria(Otdel.class);
         List l = criteria.list();

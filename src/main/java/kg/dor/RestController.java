@@ -419,6 +419,66 @@ public class RestController {
 		}
 		return "balance";
 	}
+
+
+	@RequestMapping(value = "all_orders",method = RequestMethod.GET)
+	public String order(ModelMap model) {
+		List<Order> orders = crudService.getOrders();
+		if(orders!=null){
+			if(orders.size()!=0){
+				model.addAttribute("orders",orders);
+			}
+		}
+		return "orders";
+	}
+
+	@RequestMapping(value = "order_info",method = RequestMethod.GET)
+	public String order_info(ModelMap model,@RequestParam("order_id") String order_id) {
+		Order order = crudService.getOrder(Long.parseLong(order_id));
+		if(order!=null){
+			model.addAttribute("order",order);
+		}
+		return "order_info";
+	}
+
+	@RequestMapping(value = "new_order",method = RequestMethod.GET)
+	public String new_order(ModelMap model) {
+		return "new_order";
+	}
+
+
+
+
+	@RequestMapping(value = "save_order",method = RequestMethod.GET)
+	public String save_order(ModelMap model,HttpServletRequest httpServletRequest) {
+		Order order = new Order();
+
+		long cl_id = Long.parseLong(httpServletRequest.getParameter("cl_id"));
+		String cl_fio = httpServletRequest.getParameter("cl_fio");
+
+		order.setCl_fio(cl_fio);
+		order.setCl_id(cl_id);
+
+
+
+
+		//String inp_date = httpServletRequest.getParameter("cl_fio");
+		//String full_amount = httpServletRequest.getParameter("cl_fio");
+		//List<Product> products = httpServletRequest.getParameter("cl_fio");
+
+
+
+
+		List<Order> orders = crudService.getOrders();
+		if(orders!=null){
+			if(orders.size()!=0){
+				model.addAttribute("orders",orders);
+			}
+		}
+		return "orders";
+	}
+
+
 }
 
 
