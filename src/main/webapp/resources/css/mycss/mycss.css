@@ -18,9 +18,16 @@
 /*padding-left:10px;*/
 /*}*/
 
-#date_data_btn,.form-signin-heading,#plus,#save{
+#date_data_btn,.form-signin-heading,#save{
     width:250px;
     position:relative;
     margin-left:35%;
     text-align:center;
+}
+#plus{
+    width:100px;
+    position:relative;
+    margin-left:39%;
+    text-align:center;
+
 }

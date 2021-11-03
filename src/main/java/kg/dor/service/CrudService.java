@@ -1,11 +1,11 @@
 package kg.dor.service;
 
 import kg.dor.models.*;
+import kg.dor.models.Order;
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -134,11 +135,19 @@ public class CrudService {
         return balance;
     }
     public List getClients(long [] clients_id){
-        Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
-        criteria.add(Restrictions.in("cl_id",clients_id));
-        List l = criteria.list();
-        if(l!=null&&l.size()!=0){
-            return l;
+       String sql = "select * from DOR_CLIENT t where t.cl_id in (";
+               for(int i=0;i<clients_id.length;i++){
+                   if(i<clients_id.length-1){
+                       sql = sql+clients_id[i]+",";
+                   }else{
+                       sql = sql+clients_id[i];
+                   }
+               }
+               sql = sql +")";
+        SQLQuery sqlQuery = session.getCurrentSession().createSQLQuery(sql).addEntity(Client.class);
+        List list = sqlQuery.list();
+        if(list!=null){
+            return list;
         }
         return null;
     }
@@ -172,6 +181,17 @@ public class CrudService {
     }
     public List getOrders(){
         Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
+        criteria.addOrder(org.hibernate.criterion.Order.desc("order_id"));
+        List l = criteria.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
+    public List getOrders(Date return_cos_date){
+        Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
+        criteria.add(Restrictions.eq("return_cos_date",return_cos_date));
+        criteria.addOrder(org.hibernate.criterion.Order.desc("order_id"));
         List l = criteria.list();
         if(l!=null&&l.size()!=0){
             return l;
@@ -215,7 +235,14 @@ public class CrudService {
         return null;
     }
 
-
+    public List getProducts(long order_id){
+       SQLQuery sqlQuery = session.getCurrentSession().createSQLQuery("select * from DOR_PRODUCT t where t.order_id = "+order_id).addEntity(Product.class);
+        List list = sqlQuery.list();
+        if(list!=null&&list.size()!=0){
+            return list;
+        }
+        return null;
+    }
 
 
     /*=======================================================================================================================================================================================*/

@@ -1,7 +1,10 @@
 package kg.dor;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import kg.dor.models.*;
 import kg.dor.service.CrudService;
+import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +42,9 @@ public class RestController {
 			model.addAttribute("errorSignIn","errorSignIn");
 			return "hello";
 		}else{
-			List<Order>l = crudService.getOrders();
+			long millis=System.currentTimeMillis();
+			java.sql.Date inp_date=new java.sql.Date(millis);
+			List<Order>l = crudService.getOrders(inp_date);
 			List<Client> clients = null;
 
 			if(l!=null){
@@ -45,7 +52,7 @@ public class RestController {
 				if(l!=null && l.size()!=0){
 					model.addAttribute("orders",l);
 					for(int i = 0;i<l.size();i++){
-						cl_ids[i] = clients.get(i).getCl_id();
+						cl_ids[i] = Long.valueOf(l.get(i).getCl_id());
 					}
 					clients = crudService.getClients(cl_ids);
 					model.addAttribute("clients",clients);
@@ -64,7 +71,10 @@ public class RestController {
 
 	@RequestMapping(value="orders",method = RequestMethod.GET)
 	public String mainPage(ModelMap model,HttpServletRequest httpServletRequest) {
-		List<Order>l = crudService.getOrders();
+		long millis=System.currentTimeMillis();
+		java.sql.Date inp_date=new java.sql.Date(millis);
+
+		List<Order>l = crudService.getOrders(inp_date);
 		List<Client> clients = new ArrayList<>();
 		if(l!=null && l.size()!=0){
 			model.addAttribute("orders",l);
@@ -435,6 +445,7 @@ public class RestController {
 	@RequestMapping(value = "order_info",method = RequestMethod.GET)
 	public String order_info(ModelMap model,@RequestParam("order_id") String order_id) {
 		Order order = crudService.getOrder(Long.parseLong(order_id));
+		order.setProducts(crudService.getProducts(order.getOrder_id()));
 		if(order!=null){
 			model.addAttribute("order",order);
 		}
@@ -462,26 +473,42 @@ public class RestController {
 
 
 
-	@RequestMapping(value = "save_order",method = RequestMethod.GET)
+	@RequestMapping(value = "save_order",method = RequestMethod.POST)
 	public String save_order(ModelMap model,HttpServletRequest httpServletRequest) {
+		String json_data = httpServletRequest.getParameter("json_data");
+		JSONObject jsonObject = new JSONObject(json_data);
+		JSONArray jsonArray = jsonObject.getJSONArray("products");
+
 		Order order = new Order();
 
-		long cl_id = Long.parseLong(httpServletRequest.getParameter("cl_id"));
-		String cl_fio = httpServletRequest.getParameter("cl_fio");
+		long cl_id = Long.parseLong(jsonObject.getString("cl_id"));
+		String cl_fio = jsonObject.getString("cl_fio");
 
 		order.setCl_fio(cl_fio);
 		order.setCl_id(cl_id);
 
 
+		List<Product> products = new ArrayList<>();
 
-
-		//String inp_date = httpServletRequest.getParameter("cl_fio");
-		//String full_amount = httpServletRequest.getParameter("cl_fio");
-		//List<Product> products = httpServletRequest.getParameter("cl_fio");
-
-
-
-
+		long millis=System.currentTimeMillis();
+		java.sql.Date inp_date=new java.sql.Date(millis);
+		float all_sum = 0f;
+		for(int i =0;i<jsonArray.length();i++){
+			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+			all_sum+=jsonObject1.getFloat("price");
+			Product product = new Product();
+			product.setName(jsonObject1.getString("name"));
+			product.setPrice(jsonObject1.getFloat("price"));
+			product.setProd_desc(jsonObject1.getString("prod_desc"));
+			product.setV_order(order);
+			products.add(product);
+		}
+		order.setInp_date(inp_date);
+		order.setReturn_cos_date(Date.valueOf(jsonObject.getString("return_cos_date")));
+		order.setFull_amount(all_sum);
+		order.setProducts(products);
+		crudService.save(order);
+/////////////////---------------------------------/////////////////////
 		List<Order> orders = crudService.getOrders();
 		if(orders!=null){
 			if(orders.size()!=0){

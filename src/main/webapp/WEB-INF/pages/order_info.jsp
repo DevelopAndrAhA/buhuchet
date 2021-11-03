@@ -21,12 +21,12 @@
 		}catch (Exception e){}
 	%>
 	<div class="row">
-		<a href="courier?cr_id=0">Новый курьер</a>
 		<table class="table">
 			<thead>
 			<tr>
 				<%
 					out.print("<th scope=col>Дата заказа</th>");
+					out.print("<th scope=col>Дата возврата средств</th>");
 					out.print("<th scope=col>Общая сумма</th>");
 					out.print("<th scope=col>ФИО клиента</th>");
 				%>
@@ -36,6 +36,7 @@
 			<%
 				out.println("<tr>");
 				out.println("<td>" + order.getInp_date() + "</td>");
+				out.println("<td>" + order.getReturn_cos_date() + "</td>");
 				out.println("<td>" + order.getFull_amount() + "</td>");
 				out.println("<td>" + order.getCl_fio() + "</td>");
 				out.println("<tr>");

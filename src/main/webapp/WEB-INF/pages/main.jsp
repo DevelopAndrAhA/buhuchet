@@ -39,11 +39,11 @@
 				$(document).ready(function () {
 					$('#start_date').datepicker({
 						autoclose: true,
-						format: "dd/mm/yyyy"
+						format: "yyyy-mm-dd"
 					});
 					$('#end_date').datepicker({
 						autoclose: true,
-						format: "dd/mm/yyyy"
+						format: "yyyy-mm-dd"
 					});
 				});
 			</script>
@@ -59,13 +59,9 @@
 				<tr>
 					<%
 						List<Order> orders = null;
-						List<Client> clients = null;
 
 						try{
 							orders = (List<Order>) pageContext.getRequest().getAttribute("orders");
-						}catch (Exception e){}
-						try{
-							clients = (List<Client>) pageContext.getRequest().getAttribute("clients");
 						}catch (Exception e){}
 
 
@@ -91,10 +87,10 @@
 								int k = i+1;
 								out.println("<tr>");
 								out.println("<td>" + k + "</td>");
-								out.println("<td>" + clients.get(i).getFio() + "</td>");
+								out.println("<td>" + order.getCl_fio() + "</td>");
 								out.println("<td>" + order.getInp_date() + "</td>");
 								out.println("<td>" + order.getFull_amount() + "</td>");
-								out.println("<td><a href=#>детально</a></td>");
+								out.println("<td><a href=order_info?order_id="+order.getOrder_id()+">детально</a></td>");
 								out.println("<tr>");
 							}
 						}

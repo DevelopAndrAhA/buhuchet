@@ -1,6 +1,7 @@
 package kg.dor.models;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -15,7 +16,8 @@ public class Order {
     private long order_id;
     private long cl_id;
     private String cl_fio;
-    private String inp_date;
+    private Date inp_date;
+    private Date return_cos_date;
 
 
 
@@ -50,11 +52,11 @@ public class Order {
         this.full_amount = full_amount;
     }
 
-    public String getInp_date() {
+    public Date getInp_date() {
         return inp_date;
     }
 
-    public void setInp_date(String inp_date) {
+    public void setInp_date(Date inp_date) {
         this.inp_date = inp_date;
     }
 
@@ -72,5 +74,13 @@ public class Order {
 
     public void setCl_fio(String cl_fio) {
         this.cl_fio = cl_fio;
+    }
+
+    public Date getReturn_cos_date() {
+        return return_cos_date;
+    }
+
+    public void setReturn_cos_date(Date return_cos_date) {
+        this.return_cos_date = return_cos_date;
     }
 }

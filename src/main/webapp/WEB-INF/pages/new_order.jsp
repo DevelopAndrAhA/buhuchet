@@ -46,21 +46,26 @@
 				</tbody>
 			</table>
 
+		<button class="btn btn-lg btn-primary btn-block" type="submit" id="plus">+</button>
 
-		<div class="dropdown">
-			<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Выбрать клиента
-				<span class="caret"></span></button>
-			<ul class="dropdown-menu">
-				<li class="dropdown-header">Список клиентов</li>
-				<%
-					if(clients!=null){
-						for(int i=0;i<clients.size();i++){
-							out.print("<li><a><p>"+clients.get(i).getFio()+"</p></a></li>");
-						}
+		<br>
+		<select name="dropdown" class="dropdown form-control">
+			<%
+				if(clients!=null){
+					for(int i=0;i<clients.size();i++){
+						out.print("<option>"+ clients.get(i).getCl_id()+": "+clients.get(i).getFio()+"</option>");
 					}
+				}
 
-				%>
-			</ul>
+			%>
+		</select>
+
+		</br>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+		<div class="form-group">
+			<label>Выбрать дату возврата средств:</label>
+			<input type="text" id="return_cos_date" class="form-control" placeholder="Выбрать дату возврата средств">
 		</div>
 		</br>
 		<div class="row">
@@ -75,11 +80,12 @@
 				</div>
 			</div>
 		</div>
-		<h1>Клиент :</h1>
 
+		<form action="save_order" method="post">
+			<input type="text" style="display: none" name="json_data" id="json_data">
+			<button class="btn btn-lg btn-primary btn-block" type="submit" id="save">Сохранить</button>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit" id="plus">+</button>
-		<button class="btn btn-lg btn-primary btn-block" type="submit" id="save">Сохранить</button>
+		</form>
 	</div>
 </div>
 
@@ -99,17 +105,12 @@
 </script>
 
 <script  type="application/javascript">
+	var order = new Object();
 	$("#save").click(function() {
 		var pn = document.getElementsByClassName('product_name');
 		var pr = document.getElementsByClassName('price');
 		var pd = document.getElementsByClassName('desc');
-
-		var order = new Object();
-
-		order.cl_id = 0;
-		order.cl_fio = "Altynbek";
 		order.products = new Array();
-
 		for (var i = 0; i < pn.length; i++) {
 			var product = new Object();
 				product.name = pn[i].value;
@@ -117,14 +118,50 @@
 				product.prod_desc = pd[i].value;
 			order.products[i]=product;
 		}
+		var tmp_return_cos_date = document.getElementById('return_cos_date');
+		order.return_cos_date = tmp_return_cos_date.value;
 		var orderJSON = JSON.stringify(order);
-		alert(orderJSON);
+		$("#json_data").val(orderJSON);
 	});
 </script>
 
 <script  type="application/javascript">
 	$("#search").click(function() {
 		window.location.replace("search_client?fio="+document.getElementById("txtSearch").value);
+	});
+</script>
+<script type="application/javascript">
+	function splitString(stringToSplit, separator) {
+		var arrayOfStrings = stringToSplit.split(separator);
+		return arrayOfStrings;
+	}
+	var item = $(".dropdown").val();
+	var tmpArr = splitString(item, ": ");
+	order.cl_id = tmpArr[0];
+	order.cl_fio = tmpArr[1];
+
+
+
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	order.return_cos_date = date;
+
+
+	$('.dropdown').change(function(){
+		item = $(this).val();
+		tmpArr = splitString(item, ": ");
+		order.cl_id = tmpArr[0];
+		order.cl_fio = tmpArr[1];
+
+	});
+
+</script>
+<script>
+	$(document).ready(function () {
+		$('#return_cos_date').datepicker({
+			autoclose: true,
+			format: "yyyy-mm-dd"
+		});
 	});
 </script>
 
