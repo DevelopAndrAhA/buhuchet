@@ -73,8 +73,8 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/kg/dor/models/Order.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/order_info.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/kg/dor/service/CrudService.java" />
         <option value="$PROJECT_DIR$/src/main/java/kg/dor/RestController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kg/dor/service/CrudService.java" />
       </list>
     </option>
   </component>
@@ -218,6 +218,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -373,7 +374,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -770,11 +770,12 @@
       <workItem from="1635790046762" duration="1198000" />
       <workItem from="1635958843828" duration="11120000" />
       <workItem from="1636130931553" duration="18676000" />
+      <workItem from="1636191969245" duration="5604000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="129771000" />
+    <option name="totallyTimeSpent" value="135375000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
@@ -803,7 +804,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47235024" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42857143" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -830,7 +831,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="54" />
+      <option name="time" value="79" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -952,14 +953,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.1.3.RELEASE/spring-web-5.1.3.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2600" max-vertical-offset="3196">
-          <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/graph.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.115385" vertical-offset="0" max-vertical-offset="578">
@@ -980,7 +973,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9347079" vertical-offset="0" max-vertical-offset="646">
           <caret line="32" column="1" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -989,8 +981,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="12" selection-end-column="28" />
           <folding>
-            <element signature="e#326#327#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
+            <element signature="e#326#327#0" expanded="false" />
+            <element signature="e#360#361#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1104,8 +1096,8 @@
         <state vertical-scroll-proportion="0.20446736" vertical-offset="0" max-vertical-offset="1258">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#1884#1885#0" expanded="true" />
-            <element signature="e#1921#1922#0" expanded="true" />
+            <element signature="e#1884#1885#0" expanded="false" />
+            <element signature="e#1921#1922#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1115,50 +1107,25 @@
         <state vertical-scroll-proportion="0.16190477" vertical-offset="0" max-vertical-offset="840">
           <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kg/dor/RestController.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.1.3.RELEASE/spring-web-5.1.3.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50060457" vertical-offset="1269" max-vertical-offset="5083">
-          <caret line="324" column="17" selection-start-line="324" selection-start-column="17" selection-end-line="324" selection-end-column="17" />
-          <folding>
-            <element signature="method#signIn#0;class#RestController#0" expanded="false" />
-            <element signature="method#mainPage#0;class#RestController#0" expanded="false" />
-            <element signature="method#couriers#0;class#RestController#0" expanded="false" />
-            <element signature="method#newcourier#0;class#RestController#0" expanded="false" />
-            <element signature="method#savecourier#0;class#RestController#0" expanded="false" />
-            <element signature="method#saveotdel#0;class#RestController#0" expanded="false" />
-            <element signature="method#saveChildOtdel#0;class#RestController#0" expanded="false" />
-            <element signature="method#otdel#0;class#RestController#0" expanded="false" />
-            <element signature="method#child_otdels#0;class#RestController#0" expanded="false" />
-            <element signature="method#newotdel#0;class#RestController#0" expanded="false" />
-            <element signature="method#department_info#0;class#RestController#0" expanded="false" />
-            <element signature="method#new_client#0;class#RestController#0" expanded="false" />
-            <element signature="method#client_info#0;class#RestController#0" expanded="false" />
-            <element signature="method#childOtdelClients#0;class#RestController#0" expanded="false" />
-            <element signature="method#all_clients#0;class#RestController#0" expanded="false" />
-            <element signature="method#balance#0;class#RestController#0" expanded="false" />
-            <element signature="method#save_balance#0;class#RestController#0" expanded="false" />
-            <element signature="method#order#0;class#RestController#0" expanded="false" />
-            <element signature="method#order_info#0;class#RestController#0" expanded="false" />
-            <element signature="method#new_order#0;class#RestController#0" expanded="false" />
-            <element signature="method#search_client#0;class#RestController#0" expanded="false" />
-            <element signature="method#save_order#0;class#RestController#0" expanded="false" />
-            <element signature="method#update_order#0;class#RestController#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.33255813" vertical-offset="2509" max-vertical-offset="3196">
+          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kg/dor/service/CrudService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62756956" vertical-offset="246" max-vertical-offset="1598">
-          <caret line="153" column="75" selection-start-line="153" selection-start-column="75" selection-end-line="153" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.68717045" vertical-offset="357" max-vertical-offset="1598">
+          <caret line="159" column="75" selection-start-line="159" selection-start-column="75" selection-end-line="159" selection-end-column="75" />
           <folding>
             <element signature="method#authorization#0;class#CrudService#0" expanded="false" />
-            <element signature="method#getClientDolg#0;class#CrudService#0" expanded="false" />
             <element signature="method#update#1;class#CrudService#0" expanded="false" />
             <element signature="method#updateBalance#0;class#CrudService#0" expanded="false" />
             <element signature="method#updateBalance#1;class#CrudService#0" expanded="false" />
@@ -1179,23 +1146,61 @@
             <element signature="method#getChildOtdels#0;class#CrudService#0" expanded="false" />
             <element signature="method#getClients#2;class#CrudService#0" expanded="false" />
             <element signature="method#getProducts#0;class#CrudService#0" expanded="false" />
+            <element signature="method#getClientDolg#0;class#CrudService#0" expanded="false" />
             <element signature="method#getClient#0;class#CrudService#0" expanded="false" />
             <element signature="method#getCourier#0;class#CrudService#0" expanded="false" />
             <element signature="method#getOtdel#0;class#CrudService#0" expanded="false" />
             <element signature="method#getChildOtdel#0;class#CrudService#0" expanded="false" />
-            <marker date="1636156819672" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_CLIENT..." />
-            <marker date="1636156819672" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_CLIENT..." />
-            <marker date="1636156819672" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_Purchase..." />
-            <marker date="1636156819672" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_ORDER..." />
-            <marker date="1636156819672" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_PURCHProduct..." />
-            <marker date="1636156819672" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_PRODUCT..." />
+            <marker date="1636197166346" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_CLIENT..." />
+            <marker date="1636197166346" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_CLIENT..." />
+            <marker date="1636197166346" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_Purchase..." />
+            <marker date="1636197166346" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_ORDER..." />
+            <marker date="1636197166346" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_PURCHProduct..." />
+            <marker date="1636197166346" expanded="true" signature="-1:-1" placeholder="select * fro..DOR_PRODUCT..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kg/dor/RestController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20738137" vertical-offset="2211" max-vertical-offset="3077">
+          <caret line="623" column="0" selection-start-line="623" selection-start-column="0" selection-end-line="623" selection-end-column="0" />
+          <folding>
+            <element signature="method#signIn#0;class#RestController#0" expanded="false" />
+            <element signature="method#mainPage#0;class#RestController#0" expanded="false" />
+            <element signature="method#couriers#0;class#RestController#0" expanded="false" />
+            <element signature="method#newcourier#0;class#RestController#0" expanded="false" />
+            <element signature="method#savecourier#0;class#RestController#0" expanded="false" />
+            <element signature="method#saveotdel#0;class#RestController#0" expanded="false" />
+            <element signature="method#saveChildOtdel#0;class#RestController#0" expanded="false" />
+            <element signature="method#otdel#0;class#RestController#0" expanded="false" />
+            <element signature="method#child_otdels#0;class#RestController#0" expanded="false" />
+            <element signature="method#newotdel#0;class#RestController#0" expanded="false" />
+            <element signature="method#department_info#0;class#RestController#0" expanded="false" />
+            <element signature="method#new_client#0;class#RestController#0" expanded="false" />
+            <element signature="method#save_client#0;class#RestController#0" expanded="false" />
+            <element signature="method#client_info#0;class#RestController#0" expanded="false" />
+            <element signature="method#childOtdelClients#0;class#RestController#0" expanded="false" />
+            <element signature="method#all_clients#0;class#RestController#0" expanded="false" />
+            <element signature="method#balance#0;class#RestController#0" expanded="false" />
+            <element signature="method#save_balance#0;class#RestController#0" expanded="false" />
+            <element signature="method#order#0;class#RestController#0" expanded="false" />
+            <element signature="method#order_info#0;class#RestController#0" expanded="false" />
+            <element signature="method#new_order#0;class#RestController#0" expanded="false" />
+            <element signature="method#search_client#0;class#RestController#0" expanded="false" />
+            <element signature="method#save_order#0;class#RestController#0" expanded="false" />
+            <element signature="method#save_purchase#0;class#RestController#0" expanded="false" />
+            <element signature="method#history_purchase#1;class#RestController#0" expanded="false" />
+            <element signature="method#purchase_info#0;class#RestController#0" expanded="false" />
+            <element signature="method#ordersOnDate#0;class#RestController#0" expanded="false" />
+            <element signature="method#update_order#0;class#RestController#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/header.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6891892" vertical-offset="306" max-vertical-offset="1394">
+        <state vertical-scroll-proportion="0.5405405" vertical-offset="427" max-vertical-offset="1394">
           <caret line="51" column="73" selection-start-line="51" selection-start-column="73" selection-end-line="51" selection-end-column="73" />
           <folding />
         </state>

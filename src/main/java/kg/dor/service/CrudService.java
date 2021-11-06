@@ -84,31 +84,32 @@ public class CrudService {
             session.getCurrentSession().update(courier);
         }
 
-        public float getClientDolg(long cl_id){
-            Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
-            Client client  = (Client)criteria.add(Restrictions.eq("cl_id",cl_id));
-            return client.getSumma_dolga();
 
-        }
-
-        public void update(Client client){
+        public float update(Client client){
             Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
-            Client client1  = (Client)criteria.add(Restrictions.eq("cl_id",client.getCl_id()));
+            Client client1  = (Client)criteria.add(Restrictions.eq("cl_id",client.getCl_id())).uniqueResult();
             float summaDolga  = client1.getSumma_dolga();
 
 
-            if(summaDolga>client.getSumma_dolga()){
-                client.setSumma_dolga(summaDolga-client.getSumma_dolga());
-            }else if(summaDolga==client.getSumma_dolga()){
-                client.setSumma_dolga(summaDolga);
-            }else if(client.getSumma_dolga()==0){
+            if(client.getSumma_dolga()==0){
                 client.setSumma_dolga(0);
+                client1.setSumma_dolga(0);
+            }else if(summaDolga>client.getSumma_dolga()){
+                summaDolga = client.getSumma_dolga() - summaDolga;
+                summaDolga = summaDolga*1;
+                client1.setSumma_dolga(0);
             }
 
+            client1.setSumma_dolga(client.getSumma_dolga());
+            client1.setOtdel_id(client.getOtdel_id());
+            client1.setPhone(client.getPhone());
+            client1.setFio(client.getFio());
+            client1.setCl_id(client.getCl_id());
+
+            session.getCurrentSession().update(client1);
 
 
-
-            session.getCurrentSession().update(client);
+            return summaDolga;
         }
         public void update(Otdel otdel){
         session.getCurrentSession().update(otdel);
@@ -146,7 +147,12 @@ public class CrudService {
             criteria.add(Restrictions.eq("cl_id",client_id));
             Client client = (Client)criteria.uniqueResult();
             float summaDolga = client.getSumma_dolga();
-            summaDolga = summaDolga - amount;
+            if(amount!=0){
+                summaDolga = summaDolga - amount;
+            }else{
+                summaDolga = 0;
+            }
+
             client.setSumma_dolga(summaDolga);
             session.getCurrentSession().update(client);
         }
@@ -164,6 +170,9 @@ public class CrudService {
                 order.setFull_amount(summa);
             }else if(order.getFull_amount()>summa && summa>0){
                 order.setFull_amount(order.getFull_amount()-summa);
+            }else if(summa==0){
+                status="Y";
+                order.setFull_amount(0);
             }
             order.setStatus(status);
             order.setReturn_cos_date(return_date);
@@ -341,6 +350,12 @@ public class CrudService {
         return null;
     }
 
+    public float getClientDolg(long cl_id){
+        Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+        Client client  = (Client)criteria.add(Restrictions.eq("cl_id",cl_id)).uniqueResult();
+        return client.getSumma_dolga();
+
+    }
 
     /*=======================================================================================================================================================================================*/
 

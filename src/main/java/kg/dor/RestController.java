@@ -321,8 +321,13 @@ public class RestController {
 				client.setSumma_dolga(Float.parseFloat(balance));
 				float summaDolga = crudService.getClientDolg(Long.parseLong(client_id));
 				if(summaDolga>Float.parseFloat(balance)&&Float.parseFloat(balance)>0){
-					crudService.updateBalance(Float.parseFloat(balance)-summaDolga,"plu");
+					crudService.updateBalance(summaDolga-Float.parseFloat(balance),"plu");
+				}else if(Float.parseFloat(balance)==0){
+					crudService.updateBalance(summaDolga,"plu");
 				}
+
+
+
 				crudService.update(client);
 				Otdel otdel = crudService.getOtdel(Long.parseLong(department_id));
 				if(otdel!=null){
@@ -621,8 +626,14 @@ public class RestController {
 		String cl_id = httpServletRequest.getParameter("cl_id");
 		String summa = httpServletRequest.getParameter("summa");
 		String return_date = httpServletRequest.getParameter("return_date");
+		Order order = crudService.getOrder(Long.parseLong(order_id));
 
-		crudService.updateBalance(Float.parseFloat(summa),"plu");
+		if(summa.equals("0")){
+			crudService.updateBalance(order.getFull_amount(),"plu");
+		}else{
+			crudService.updateBalance(Float.parseFloat(summa),"plu");
+		}
+
 		crudService.clientAmountUpdate(Float.parseFloat(summa),Long.parseLong(cl_id));
 		crudService.updateOrder(Long.parseLong(order_id),Float.parseFloat(summa),Date.valueOf(return_date));
 
