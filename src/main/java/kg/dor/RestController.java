@@ -70,7 +70,7 @@ public class RestController {
 
 
 	@RequestMapping(value="orders",method = RequestMethod.GET)
-	public String mainPage(ModelMap model,HttpServletRequest httpServletRequest) {
+	public String mainPage(ModelMap model) {
 		long millis=System.currentTimeMillis();
 		java.sql.Date inp_date=new java.sql.Date(millis);
 
@@ -319,6 +319,10 @@ public class RestController {
 				client.setFio(fio);
 				client.setPhone(phone);
 				client.setSumma_dolga(Float.parseFloat(balance));
+				float summaDolga = crudService.getClientDolg(Long.parseLong(client_id));
+				if(summaDolga>Float.parseFloat(balance)&&Float.parseFloat(balance)>0){
+					crudService.updateBalance(Float.parseFloat(balance)-summaDolga,"plu");
+				}
 				crudService.update(client);
 				Otdel otdel = crudService.getOtdel(Long.parseLong(department_id));
 				if(otdel!=null){
@@ -431,6 +435,7 @@ public class RestController {
 	}
 
 
+
 	@RequestMapping(value = "all_orders",method = RequestMethod.GET)
 	public String order(ModelMap model) {
 		List<Order> orders = crudService.getOrders();
@@ -506,9 +511,121 @@ public class RestController {
 		order.setInp_date(inp_date);
 		order.setReturn_cos_date(Date.valueOf(jsonObject.getString("return_cos_date")));
 		order.setFull_amount(all_sum);
+		order.setHistory_amount(all_sum);
 		order.setProducts(products);
+		order.setStatus("N");
 		crudService.save(order);
 /////////////////---------------------------------/////////////////////
+		List<Order> orders = crudService.getOrders();
+		if(orders!=null){
+			if(orders.size()!=0){
+				model.addAttribute("orders",orders);
+			}
+		}
+		return "orders";
+	}
+
+
+
+
+	@RequestMapping(value = "purchase",method = RequestMethod.GET)
+	public String purchase(ModelMap model) {
+		return "purchase";
+	}
+	@RequestMapping(value = "history_purchase",method = RequestMethod.GET)
+	public String history_purchase(ModelMap model) {
+		return "list_purchases";
+	}
+
+	@RequestMapping(value = "save_purchase",method = RequestMethod.POST)
+	public String save_purchase(ModelMap model,HttpServletRequest httpServletRequest) {
+		String jsonProducts = httpServletRequest.getParameter("json_data");
+		JSONObject jsonObject = new JSONObject(jsonProducts);
+		JSONArray jsonArray = jsonObject.getJSONArray("products");
+		List <PProduct> PProducts = new ArrayList<>();
+		Purchase purchase = new Purchase();
+		float all_amount = 0;
+		long millis=System.currentTimeMillis();
+		java.sql.Date inp_date=new java.sql.Date(millis);
+		purchase.setInp_date(inp_date);
+		for(int i =0;i<jsonArray.length();i++){
+			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+			float price = jsonObject1.getFloat("price");
+			String name = jsonObject1.getString("name");
+			String desc = jsonObject1.getString("prod_desc");
+
+
+			PProduct pProduct = new PProduct();
+			pProduct.setName(name);
+			pProduct.setProd_desc(desc);
+			pProduct.setPrice(price);
+			pProduct.setV_purchase(purchase);
+			PProducts.add(pProduct);
+			all_amount =+price;
+		}
+
+		purchase.setAll_price(all_amount);
+		purchase.setpProducts(PProducts);
+		crudService.save(purchase);
+		crudService.updateBalance(all_amount, "min");
+
+
+		return "purchase";
+	}
+
+
+
+	@RequestMapping(value = "history_purchase_d",method = RequestMethod.POST)
+	public String history_purchase(ModelMap model,HttpServletRequest httpServletRequest) {
+		String start_date = httpServletRequest.getParameter("start_date");
+		String end_date = httpServletRequest.getParameter("end_date");
+
+		List<Purchase> purchases = crudService.getPurchaseList(Date.valueOf(start_date),Date.valueOf(end_date));
+		if(purchases!=null){
+			model.addAttribute("purchases",purchases);
+		}
+
+		return "list_purchases";
+	}
+	@RequestMapping(value = "purchase_info",method = RequestMethod.GET)
+	public String purchase_info(ModelMap model,@RequestParam("purchase_id")String purchase_id) {
+		if(!purchase_id.isEmpty()){
+			List<PProduct> pProducts = crudService.getPurchaseProducts(Long.valueOf(purchase_id));
+			if(pProducts!=null){
+				model.addAttribute("pProducts",pProducts);
+			}
+		}
+		return "list_purchases";
+	}
+
+
+	@RequestMapping(value = "get-data-f",method = RequestMethod.POST)
+	public String ordersOnDate(ModelMap model,HttpServletRequest httpServletRequest) {
+		String start_date = httpServletRequest.getParameter("start_date");
+		String end_date = httpServletRequest.getParameter("end_date");
+
+		List<Purchase> purchases = crudService.getOrders(Date.valueOf(start_date), Date.valueOf(end_date));
+		if(purchases!=null){
+			model.addAttribute("orders",purchases);
+		}
+
+		return "main";
+	}
+
+
+
+
+	@RequestMapping(value = "update_order",method = RequestMethod.POST)
+	public String update_order(ModelMap model,HttpServletRequest httpServletRequest) {
+		String order_id = httpServletRequest.getParameter("order_id");
+		String cl_id = httpServletRequest.getParameter("cl_id");
+		String summa = httpServletRequest.getParameter("summa");
+		String return_date = httpServletRequest.getParameter("return_date");
+
+		crudService.updateBalance(Float.parseFloat(summa),"plu");
+		crudService.clientAmountUpdate(Float.parseFloat(summa),Long.parseLong(cl_id));
+		crudService.updateOrder(Long.parseLong(order_id),Float.parseFloat(summa),Date.valueOf(return_date));
+
 		List<Order> orders = crudService.getOrders();
 		if(orders!=null){
 			if(orders.size()!=0){

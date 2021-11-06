@@ -16,6 +16,7 @@ public class Order {
     private long order_id;
     private long cl_id;
     private String cl_fio;
+    private String status;
     private Date inp_date;
     private Date return_cos_date;
 
@@ -24,6 +25,7 @@ public class Order {
     @OneToMany(mappedBy = "v_order", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<Product> products;
     private float full_amount;
+    private float history_amount;
 
 
 
@@ -82,5 +84,21 @@ public class Order {
 
     public void setReturn_cos_date(Date return_cos_date) {
         this.return_cos_date = return_cos_date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public float getHistory_amount() {
+        return history_amount;
+    }
+
+    public void setHistory_amount(float history_amount) {
+        this.history_amount = history_amount;
     }
 }

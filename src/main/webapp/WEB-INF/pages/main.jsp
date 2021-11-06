@@ -26,11 +26,11 @@
 				<div class="row">
 					<div class="form-group">
 						<label>Выбрать начальную дату:</label>
-						<input type="text" id="start_date" class="form-control" placeholder="Выбрать начальную дату">
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Выбрать начальную дату">
 					</div>
 					<div class="form-group">
 						<label>Выбрать конечную дату:</label>
-						<input type="text" id="end_date" class="form-control" placeholder="Выбрать начальную дату">
+						<input type="text" id="end_date"  name="end_date"  class="form-control" placeholder="Выбрать начальную дату">
 					</div>
 				</div>
 			</div>

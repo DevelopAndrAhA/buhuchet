@@ -28,6 +28,7 @@
 					out.print("<th scope=col>Дата заказа</th>");
 					out.print("<th scope=col>Дата возврата средств</th>");
 					out.print("<th scope=col>Общая сумма</th>");
+					out.print("<th scope=col>Изначальная сумма</th>");
 					out.print("<th scope=col>ФИО клиента</th>");
 				%>
 			</tr>
@@ -38,11 +39,52 @@
 				out.println("<td>" + order.getInp_date() + "</td>");
 				out.println("<td>" + order.getReturn_cos_date() + "</td>");
 				out.println("<td>" + order.getFull_amount() + "</td>");
+				out.println("<td>" + order.getHistory_amount() + "</td>");
 				out.println("<td>" + order.getCl_fio() + "</td>");
 				out.println("<tr>");
 			%>
 			</tbody>
 		</table>
+
+
+
+
+
+		<form action="update_order" method="post">
+			<input type="text" style="display: none" name="order_id" value="<%out.print(order.getOrder_id());%>">
+			<input type="text" style="display: none" name="cl_id" value="<%out.print(order.getCl_id());%>">
+			<div class="form-group">
+				<label>Сумма:</label>
+				<input type="text" class="form-control" id="summa" placeholder="Сумма"  name="summa"  value="<%out.print(order.getFull_amount());%>">
+			</div>
+			<div class="form-group">
+				<label>Дата возврата:</label>
+				<input type="text" id="return_date" name="return_date" class="form-control" placeholder="Дата возврата:" value="<%out.print(order.getReturn_cos_date());%>">
+			</div>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+			<script>
+				$(document).ready(function () {
+					$('#return_date').datepicker({
+						autoclose: true,
+						format: "yyyy-mm-dd"
+					});
+				});
+			</script>
+
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit" id="save">Сохранить</button>
+
+		</form>
+
+
+
+
+
+
+
+
+
+
 		<table class="table">
 			<thead>
 			<tr>

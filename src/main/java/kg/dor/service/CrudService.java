@@ -63,10 +63,6 @@ public class CrudService {
         session.getCurrentSession().save(childOtdel);
     }
 
-        public void save(Dolg dolg){
-            session.getCurrentSession().save(dolg);
-        }
-
         public void save(Order order){
             session.getCurrentSession().save(order);
         }
@@ -79,15 +75,39 @@ public class CrudService {
         session.getCurrentSession().save(balance);
     }
 
-        public void save(Product product){
-            session.getCurrentSession().save(product);
+        public void save(Purchase purchase){
+            session.getCurrentSession().save(purchase);
         }
     /*=======================================================================================================================================================================================*/
 
         public void update(Courier courier){
             session.getCurrentSession().update(courier);
         }
+
+        public float getClientDolg(long cl_id){
+            Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+            Client client  = (Client)criteria.add(Restrictions.eq("cl_id",cl_id));
+            return client.getSumma_dolga();
+
+        }
+
         public void update(Client client){
+            Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+            Client client1  = (Client)criteria.add(Restrictions.eq("cl_id",client.getCl_id()));
+            float summaDolga  = client1.getSumma_dolga();
+
+
+            if(summaDolga>client.getSumma_dolga()){
+                client.setSumma_dolga(summaDolga-client.getSumma_dolga());
+            }else if(summaDolga==client.getSumma_dolga()){
+                client.setSumma_dolga(summaDolga);
+            }else if(client.getSumma_dolga()==0){
+                client.setSumma_dolga(0);
+            }
+
+
+
+
             session.getCurrentSession().update(client);
         }
         public void update(Otdel otdel){
@@ -103,10 +123,52 @@ public class CrudService {
             balance1.setBalance_sum(balance);
             session.getCurrentSession().update(balance1);
         }
+        public void updateBalance(float balance,String type){
+
+            float curr_balance = 0;
+
+            Criteria criteria = session.getCurrentSession().createCriteria(Balance.class);
+            criteria.setMaxResults(1);
+            Balance balance1 = (Balance)criteria.uniqueResult();
+
+            curr_balance = balance1.getBalance_sum();
+
+            if(type.equals("plu")){
+                balance1.setBalance_sum(curr_balance+balance);
+            }else if(type.equals("min")){
+                balance1.setBalance_sum(curr_balance-balance);
+            }
+
+            session.getCurrentSession().update(balance1);
+        }
+        public void clientAmountUpdate(float amount,long client_id){
+            Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+            criteria.add(Restrictions.eq("cl_id",client_id));
+            Client client = (Client)criteria.uniqueResult();
+            float summaDolga = client.getSumma_dolga();
+            summaDolga = summaDolga - amount;
+            client.setSumma_dolga(summaDolga);
+            session.getCurrentSession().update(client);
+        }
+
+        public void updateOrder(long order_id,float summa,Date return_date){
+            String status = "N";
+
+            Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
+            criteria.add(Restrictions.eq("order_id",order_id));
+            Order order = (Order) criteria.uniqueResult();
 
 
-
-
+            if(order.getFull_amount()==summa && summa>0){
+                status="Y";
+                order.setFull_amount(summa);
+            }else if(order.getFull_amount()>summa && summa>0){
+                order.setFull_amount(order.getFull_amount()-summa);
+            }
+            order.setStatus(status);
+            order.setReturn_cos_date(return_date);
+            session.getCurrentSession().update(order);
+        }
 
 
     /*=======================================================================================================================================================================================*/
@@ -125,6 +187,7 @@ public class CrudService {
 
     public List getClients(){
         Criteria criteria = session.getCurrentSession().createCriteria(Client.class);
+        criteria.addOrder(org.hibernate.criterion.Order.desc("cl_id"));
         List list  = criteria.list();
         return list;
     }
@@ -171,16 +234,10 @@ public class CrudService {
         }
         return null;
     }
-    public List getDolgs(){
-        Criteria criteria = session.getCurrentSession().createCriteria(Dolg.class);
-        List l = criteria.list();
-        if(l!=null&&l.size()!=0){
-            return l;
-        }
-        return null;
-    }
     public List getOrders(){
         Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
+        criteria.add(Restrictions.eq("status","N"));
+        criteria.setMaxResults(500);
         criteria.addOrder(org.hibernate.criterion.Order.desc("order_id"));
         List l = criteria.list();
         if(l!=null&&l.size()!=0){
@@ -191,8 +248,48 @@ public class CrudService {
     public List getOrders(Date return_cos_date){
         Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
         criteria.add(Restrictions.eq("return_cos_date",return_cos_date));
+        criteria.add(Restrictions.eq("status","N"));
         criteria.addOrder(org.hibernate.criterion.Order.desc("order_id"));
         List l = criteria.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
+    public List getPurchaseList(Date startDate,Date end_date){
+//        Criteria criteria = session.getCurrentSession().createCriteria(Purchase.class);
+//        criteria.add(Restrictions.ge("inp_date", startDate));
+//        criteria.add(Restrictions.lt("inp_date", end_date));
+//
+//        criteria.addOrder(org.hibernate.criterion.Order.desc("p_id"));
+        String sql = "select * from DOR_Purchase t where t.inp_date between '"+startDate+"' and '"+end_date+"' order by p_id desc";
+        SQLQuery sqlQuery = session.getCurrentSession().createSQLQuery(sql).addEntity(Purchase.class);
+        //List l = criteria.list();
+        List l = sqlQuery.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
+    public List getOrders(Date startDate,Date end_date){
+        /*Criteria criteria = session.getCurrentSession().createCriteria(Order.class);
+        criteria.add(Restrictions.ge("inp_date", startDate));
+        criteria.add(Restrictions.lt("inp_date", end_date));
+
+        criteria.addOrder(org.hibernate.criterion.Order.desc("order_id"));*/
+        String sql = "select * from DOR_ORDER t where t.inp_date BETWEEN '"+startDate+"'"+" and '"+end_date+"' order by t.order_id desc";
+        SQLQuery sqlQuery = session.getCurrentSession().createSQLQuery(sql).addEntity(Order.class);
+        //List l = criteria.list();
+        List l = sqlQuery.list();
+        if(l!=null&&l.size()!=0){
+            return l;
+        }
+        return null;
+    }
+    public List getPurchaseProducts(long purchase_id){
+        SQLQuery sqlQuery = session.getCurrentSession().createSQLQuery("select * from DOR_PURCHProduct t where t.purchase_id="+purchase_id);
+        sqlQuery.addEntity(PProduct.class);
+        List l = sqlQuery.list();
         if(l!=null&&l.size()!=0){
             return l;
         }
