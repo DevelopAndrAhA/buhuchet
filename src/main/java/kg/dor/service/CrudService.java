@@ -395,4 +395,18 @@ public class CrudService {
         }
         return null;
     }
+
+
+
+
+
+
+    /*=======================================================================================================================================================================================*/
+
+
+    public void save(LoginPassword loginPassword){
+        session.getCurrentSession().save(loginPassword);
+    }
+
+
 }
